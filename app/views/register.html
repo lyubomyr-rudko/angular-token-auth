@@ -1,0 +1,22 @@
+<form name="register" ng-submit="submit()">
+<h2>Register</h2>
+	<div class="form-group">
+		<input type="email" name="email" ng-model="email"  
+		id="email" tabindex="1" class="form-control" placeholder="Email Address" value="" required>
+	</div>
+	<div class="form-group">
+		<input type="password" name="password" ng-model="password"  
+		id="password" tabindex="2" class="form-control" placeholder="Password" required>
+	</div>
+	<div class="form-group">
+		<input type="password" name="password_confirm" ng-model="confirm_password" tabindex="2" class="form-control" placeholder="Confirm Password" validate-equals="password" required>
+	</div>
+	<p class="help-block" ng-show="register.password_confirm.$dirty && register.password_confirm.$invalid">Please match</p>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">
+				<input ng-disabled="register.$invalid" type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+			</div>
+		</div>
+	</div>
+</form>
