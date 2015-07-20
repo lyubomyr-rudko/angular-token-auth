@@ -9,4 +9,4 @@
  * Main module of the application.
  */
 angular
-  .module('nodeAngularOausLearningApp', ['ui.router']);
+  .module('nodeAngularOausLearningApp', ['ui.router', 'ngAnimate']);
