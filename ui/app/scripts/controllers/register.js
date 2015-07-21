@@ -8,23 +8,16 @@
  * Controller of the nodeAngularOausLearningApp
  */
 angular.module('nodeAngularOausLearningApp')
-  .controller('RegisterCtrl', function ($scope, $http, $state, alert, authToken) {
-    $scope.submit = function () {
-    	var url = 'http://localhost:3000/api/register', 
-    		user = {
-                email: $scope.email, 
-                password: $scope.password
-            };
+    .controller('RegisterCtrl', function ($scope, $state, alert, auth) {
+        $scope.submit = function () {
+            auth.register($scope.email, $scope.password)
+                .success(function (res) {
+                    alert('info', 'You are now registered!', 'Welcome back, ' + res.user.email + '!');
 
-    	$http.post(url, user)
-    		.success(function (res) {
-    			alert('info', 'You are now registered!', 'Welcome, ' + res.user.email + '!');
-
-                authToken.setToken(res.token);
-                $state.go('main');
-    		})
-    		.error(function () {
-    			alert('warning', 'Oops', 'Could not register'); 
-    		});
-    };
-  });
+                    $state.go('main');
+                })
+                .error(function () {
+                    alert('warning', 'Oops', 'Could not register'); 
+                });
+        };
+});

@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var User = require('./models/user.js').model;
+var User = require('./models/user.js');
 var jwt = require('./services/jwt.js');
 
 var app = express();
@@ -25,20 +25,57 @@ app.post('/api/register', function (req, res) {
 		password: user.password
 	});
 
+	newUser.save(function (err) {
+		if (err) {
+			throw err;
+		}
+
+		createAndSendToken(newUser, res);
+	});
+});
+
+app.post('/api/login', function (req, res) {
+	req.user = req.body;
+
+	var searchUser = {
+		email: req.user.email
+	};
+
+	User.findOne(searchUser, function (err, user) {
+		if (err) {
+			throw err;
+		}
+
+		if (!user) {
+			return res.status(401).send({message: 'Wrong email/password'});
+		}
+
+		user.comparePasswords(req.user.password, function (err, isMatch) {
+			if (err) {
+				throw err;
+			}
+
+			if (isMatch) {
+				createAndSendToken(user, res);
+			} else {
+				res.status(401).send({message: 'Wrong email/password'});
+			}
+		});
+	});
+});
+
+function createAndSendToken (user, res) {
 	var payload = {
-		iss: req.hostname,
-		sub: newUser.id
+		sub: user.id
 	};
 
 	var token = jwt.encode(payload, 'LKJLK&&*DSJF&*(');
 
-	newUser.save(function (err) {
-		res.status(200).send({
-			user: newUser.toJSON(),
-			token: token
-		});
+	res.status(200).send({
+		user: user.toJSON(),
+		token: token
 	});
-});
+}
 
 var jobs = [
 	'Cook',
