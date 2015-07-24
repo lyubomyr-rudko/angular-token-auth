@@ -1,92 +1,87 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node',
-1 verbose cli   '/usr/local/bin/npm',
-1 verbose cli   'install',
-1 verbose cli   'bcrypt-node.js',
-1 verbose cli   '--save' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'passwort', '--save' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.32
 4 verbose node symlink /usr/local/bin/node
 5 warn package.json api@1.0.0 No description
 6 warn package.json api@1.0.0 No repository field.
 7 warn package.json api@1.0.0 No README data
-8 verbose readDependencies using package.json deps
-9 verbose cache add [ 'bcrypt-node.js', null ]
-10 verbose cache add name=undefined spec="bcrypt-node.js" args=["bcrypt-node.js",null]
-11 verbose parsed url { protocol: null,
-11 verbose parsed url   slashes: null,
-11 verbose parsed url   auth: null,
-11 verbose parsed url   host: null,
-11 verbose parsed url   port: null,
-11 verbose parsed url   hostname: null,
-11 verbose parsed url   hash: null,
-11 verbose parsed url   search: null,
-11 verbose parsed url   query: null,
-11 verbose parsed url   pathname: 'bcrypt-node.js',
-11 verbose parsed url   path: 'bcrypt-node.js',
-11 verbose parsed url   href: 'bcrypt-node.js' }
-12 silly lockFile 5ad9d682-bcrypt-node-js bcrypt-node.js
-13 verbose lock bcrypt-node.js /Users/lyubomyrrudko/.npm/5ad9d682-bcrypt-node-js.lock
-14 silly lockFile 5ad9d682-bcrypt-node-js bcrypt-node.js
-15 silly lockFile 5ad9d682-bcrypt-node-js bcrypt-node.js
-16 verbose addNamed [ 'bcrypt-node.js', '' ]
-17 verbose addNamed [ null, '*' ]
-18 silly lockFile 83427a79-bcrypt-node-js bcrypt-node.js@
-19 verbose lock bcrypt-node.js@ /Users/lyubomyrrudko/.npm/83427a79-bcrypt-node-js.lock
-20 silly addNameRange { name: 'bcrypt-node.js', range: '*', hasData: false }
-21 verbose request where is /bcrypt-node.js
-22 verbose request registry https://registry.npmjs.org/
-23 verbose request id e235fb4519b2cf5c
-24 verbose url raw /bcrypt-node.js
-25 verbose url resolving [ 'https://registry.npmjs.org/', './bcrypt-node.js' ]
-26 verbose url resolved https://registry.npmjs.org/bcrypt-node.js
-27 verbose request where is https://registry.npmjs.org/bcrypt-node.js
-28 info trying registry request attempt 1 at 16:12:53
-29 http GET https://registry.npmjs.org/bcrypt-node.js
-30 http 404 https://registry.npmjs.org/bcrypt-node.js
-31 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-31 verbose headers   'content-type': 'application/json',
-31 verbose headers   'cache-control': 'max-age=0',
-31 verbose headers   'content-length': '51',
-31 verbose headers   'accept-ranges': 'bytes',
-31 verbose headers   date: 'Thu, 16 Jul 2015 13:12:53 GMT',
-31 verbose headers   via: '1.1 varnish',
-31 verbose headers   age: '0',
-31 verbose headers   connection: 'keep-alive',
-31 verbose headers   'x-served-by': 'cache-fra1238-FRA',
-31 verbose headers   'x-cache': 'MISS',
-31 verbose headers   'x-cache-hits': '0',
-31 verbose headers   'x-timer': 'S1437052373.267228,VS0,VE111' }
-32 silly registry.get cb [ 404,
-32 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-32 silly registry.get     'content-type': 'application/json',
-32 silly registry.get     'cache-control': 'max-age=0',
-32 silly registry.get     'content-length': '51',
-32 silly registry.get     'accept-ranges': 'bytes',
-32 silly registry.get     date: 'Thu, 16 Jul 2015 13:12:53 GMT',
-32 silly registry.get     via: '1.1 varnish',
-32 silly registry.get     age: '0',
-32 silly registry.get     connection: 'keep-alive',
-32 silly registry.get     'x-served-by': 'cache-fra1238-FRA',
-32 silly registry.get     'x-cache': 'MISS',
-32 silly registry.get     'x-cache-hits': '0',
-32 silly registry.get     'x-timer': 'S1437052373.267228,VS0,VE111' } ]
-33 silly lockFile 83427a79-bcrypt-node-js bcrypt-node.js@
-34 silly lockFile 83427a79-bcrypt-node-js bcrypt-node.js@
-35 error 404 404 Not Found: bcrypt-node.js
-35 error 404
-35 error 404 'bcrypt-node.js' is not in the npm registry.
-35 error 404 You should bug the author to publish it
-35 error 404 It was specified as a dependency of 'api'
-35 error 404
-35 error 404 Maybe try 'npm search bcrypt node'
-35 error 404
-35 error 404 Note that you can also install from a
-35 error 404 tarball, folder, or http url, or git url.
-36 error System Darwin 14.1.0
-37 error command "node" "/usr/local/bin/npm" "install" "bcrypt-node.js" "--save"
-38 error cwd /Users/lyubomyrrudko/develop/node-angular-oaus-learning/api
-39 error node -v v0.10.32
-40 error npm -v 1.4.28
-41 error code E404
-42 verbose exit [ 1, true ]
+8 warn package.json crypto@0.0.3 crypto is also the name of a node core module.
+9 verbose readDependencies using package.json deps
+10 verbose cache add [ 'passwort', null ]
+11 verbose cache add name=undefined spec="passwort" args=["passwort",null]
+12 verbose parsed url { protocol: null,
+12 verbose parsed url   slashes: null,
+12 verbose parsed url   auth: null,
+12 verbose parsed url   host: null,
+12 verbose parsed url   port: null,
+12 verbose parsed url   hostname: null,
+12 verbose parsed url   hash: null,
+12 verbose parsed url   search: null,
+12 verbose parsed url   query: null,
+12 verbose parsed url   pathname: 'passwort',
+12 verbose parsed url   path: 'passwort',
+12 verbose parsed url   href: 'passwort' }
+13 silly lockFile 2e2b6533-passwort passwort
+14 verbose lock passwort /Users/lyubomyrrudko/.npm/2e2b6533-passwort.lock
+15 silly lockFile 2e2b6533-passwort passwort
+16 silly lockFile 2e2b6533-passwort passwort
+17 verbose addNamed [ 'passwort', '' ]
+18 verbose addNamed [ null, '*' ]
+19 silly lockFile e5136556-passwort passwort@
+20 verbose lock passwort@ /Users/lyubomyrrudko/.npm/e5136556-passwort.lock
+21 silly addNameRange { name: 'passwort', range: '*', hasData: false }
+22 verbose request where is /passwort
+23 verbose request registry https://registry.npmjs.org/
+24 verbose request id be6731d88c497e3c
+25 verbose url raw /passwort
+26 verbose url resolving [ 'https://registry.npmjs.org/', './passwort' ]
+27 verbose url resolved https://registry.npmjs.org/passwort
+28 verbose request where is https://registry.npmjs.org/passwort
+29 info trying registry request attempt 1 at 17:04:23
+30 http GET https://registry.npmjs.org/passwort
+31 http 404 https://registry.npmjs.org/passwort
+32 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+32 verbose headers   'content-type': 'application/json',
+32 verbose headers   'cache-control': 'max-age=0',
+32 verbose headers   'content-length': '51',
+32 verbose headers   'accept-ranges': 'bytes',
+32 verbose headers   date: 'Tue, 21 Jul 2015 14:04:23 GMT',
+32 verbose headers   via: '1.1 varnish',
+32 verbose headers   age: '0',
+32 verbose headers   connection: 'keep-alive',
+32 verbose headers   'x-served-by': 'cache-fra1222-FRA',
+32 verbose headers   'x-cache': 'MISS',
+32 verbose headers   'x-cache-hits': '0',
+32 verbose headers   'x-timer': 'S1437487463.298942,VS0,VE182' }
+33 silly registry.get cb [ 404,
+33 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+33 silly registry.get     'content-type': 'application/json',
+33 silly registry.get     'cache-control': 'max-age=0',
+33 silly registry.get     'content-length': '51',
+33 silly registry.get     'accept-ranges': 'bytes',
+33 silly registry.get     date: 'Tue, 21 Jul 2015 14:04:23 GMT',
+33 silly registry.get     via: '1.1 varnish',
+33 silly registry.get     age: '0',
+33 silly registry.get     connection: 'keep-alive',
+33 silly registry.get     'x-served-by': 'cache-fra1222-FRA',
+33 silly registry.get     'x-cache': 'MISS',
+33 silly registry.get     'x-cache-hits': '0',
+33 silly registry.get     'x-timer': 'S1437487463.298942,VS0,VE182' } ]
+34 silly lockFile e5136556-passwort passwort@
+35 silly lockFile e5136556-passwort passwort@
+36 error 404 404 Not Found: passwort
+36 error 404
+36 error 404 'passwort' is not in the npm registry.
+36 error 404 You should bug the author to publish it
+36 error 404 It was specified as a dependency of 'api'
+36 error 404
+36 error 404 Note that you can also install from a
+36 error 404 tarball, folder, or http url, or git url.
+37 error System Darwin 14.1.0
+38 error command "node" "/usr/local/bin/npm" "install" "passwort" "--save"
+39 error cwd /Users/lyubomyrrudko/develop/node-angular-oaus-learning/api
+40 error node -v v0.10.32
+41 error npm -v 1.4.28
+42 error code E404
+43 verbose exit [ 1, true ]
