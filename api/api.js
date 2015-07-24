@@ -72,20 +72,8 @@ app.post('/api/register', function (req, res) {
 	});
 });
 
-app.post('/api/login', function (req, res, next) {
-	passport.authenticate('local', function (err, user) {
-		if (err) {
-			next(err);
-		}
-
-		req.login(user, function (err) {
-			if (err) {
-				next(err);
-			}
-
-			createAndSendToken(user, res);
-		});
-	})(req, res, next);
+app.post('/api/login', passport.authenticate('local'), function (req, res) {
+	createAndSendToken(req.user, res);
 });
 
 function createAndSendToken (user, res) {
