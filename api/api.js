@@ -5,6 +5,7 @@ var User = require('./models/user.js');
 var jwt = require('./services/jwt.js');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var request = require('request');
 
 var app = express();
 
@@ -23,7 +24,7 @@ app.use(function (req, res, next) {
 	next();
 });
 
-var strategy = new LocalStrategy({
+var loginStrategy = new LocalStrategy({
 	usernameField: 'email'
 }, function (email, password, done) {
 	var searchUser = {
@@ -53,26 +54,45 @@ var strategy = new LocalStrategy({
 	});
 });
 
-passport.use(strategy);
+var registerStrategy = new LocalStrategy({
+	usernameField: 'email'
+}, function (email, password, done) {
+	var searchUser = {
+		email: email
+	};
 
-app.post('/api/register', function (req, res) {
-	var user = req.body;
-
-	var newUser = new User({
-		email: user.email,
-		password: user.password
-	});
-
-	newUser.save(function (err) {
+	User.findOne(searchUser, function (err, user) {
 		if (err) {
-			throw err;
+			return done(err);
 		}
 
-		createAndSendToken(newUser, res);
+		if (user) {
+			return done(null, false, {message: 'User allready exists'}); 
+		}
+
+		var newUser = new User({
+			email: email,
+			password: password
+		});
+
+		newUser.save(function (err) {
+			if (err) {
+				return done(err);
+			}
+
+			return done(null, newUser);
+		});
 	});
 });
 
-app.post('/api/login', passport.authenticate('local'), function (req, res) {
+passport.use('local-register', registerStrategy);
+passport.use('local-login', loginStrategy);
+
+app.post('/api/register', passport.authenticate('local-register'), function (req, res) {
+	createAndSendToken(req.user, res);
+});
+
+app.post('/api/login', passport.authenticate('local-login'), function (req, res) {
 	createAndSendToken(req.user, res);
 });
 
@@ -108,6 +128,54 @@ app.get('/api/jobs', function (req, res) {
 	}  
 
 	res.json(jobs);
+});
+
+app.post('/api/auth/google', function (req, res) {
+	var params = {
+		code: req.body.code,
+		client_id: req.body.clientId, // '958858990567-cvvik866sm852s3virfe4jqi4ucti4mv.apps.googleusercontent.com',
+		client_secret: '7p5ibRZSgk-rEpYfgKtcy5qJ',
+		redirect_uri: req.body.redirectUri, // 'http://localhost:9000/',
+		grant_type: 'authorization_code'
+	};
+
+	var url = 'https://www.googleapis.com/oauth2/v3/token';
+	var apiUrl = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect'; // userId?access_token=1/fFBGRNJru1FQd44AzqT3Zg
+
+
+	request.post(url, {
+		json: true,
+		form: params
+	}, function (err, response, token) {
+		var accessToken = token.access_token;
+		var headers = {
+			Authorization: 'Bearer ' + accessToken
+		};
+		var userId = token.user_id;
+
+		request.get(apiUrl, {
+			headers: headers,
+			json: true
+		}, function (err, response, profile) {
+			User.findOne({
+				googleId: profile.sub
+			}, function (err, foundUser) {
+				if (foundUser) {
+					return createAndSendToken(foundUser, res);
+				} else {
+					var newUser = new User({
+						email: profile.email,
+						googleId: profile.sub,
+						displayName: profile.name
+					});
+
+					newUser.save(function (err) {
+						return createAndSendToken(newUser, res);
+					});
+				}
+			});
+		});
+	});
 });
 
 mongoose.connect('mongodb://localhost/psjwt');

@@ -20,5 +20,16 @@ angular.module('nodeAngularOausLearningApp')
 					alert('warning', 'Oops', 'Could not login'); 
 				});
 		};
+
+		$scope.google = function () {
+			auth.googleAuth()
+				.then(function (res) {
+					alert('info', 'You are now Loged In!', 'Welcome back, ' + res.user.email + '!');
+
+					$state.go('main');
+				}, function () {
+					alert('warning', 'Oops', 'Could not login'); 
+				});	
+		};
 });
 	

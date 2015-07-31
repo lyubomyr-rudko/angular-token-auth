@@ -3,7 +3,9 @@ var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new mongoose.Schema({
 	email: String,
-	password: String
+	password: String,
+	googleId: String,
+	displayName: String
 });
 
 UserSchema.methods.toJSON = function () {
@@ -32,6 +34,7 @@ UserSchema.pre('save', function (next) {
 			if (err) return next(err);
 
 			user.password = hash;
+
 			next();
 		});
 	});
