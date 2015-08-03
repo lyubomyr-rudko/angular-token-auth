@@ -8,6 +8,6 @@
  * Controller of the nodeAngularOausLearningApp
  */
 angular.module('nodeAngularOausLearningApp')
-  	.controller('HeaderCtrl', function ($scope, authToken) {
-  		$scope.isAuthenticated = authToken.isAuthenticated;
+  	.controller('HeaderCtrl', function ($scope, authToken, $auth) {
+  		$scope.isAuthenticated = $auth.isAuthenticated;
   	});

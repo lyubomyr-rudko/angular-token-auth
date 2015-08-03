@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('nodeAngularOausLearningApp').config(function ($urlRouterProvider, $stateProvider, $httpProvider) {
+angular.module('nodeAngularOausLearningApp').config(function ($urlRouterProvider, $stateProvider, $httpProvider, $authProvider, API_URL) {
 
 	$urlRouterProvider.otherwise('/');
 
@@ -28,6 +28,22 @@ angular.module('nodeAngularOausLearningApp').config(function ($urlRouterProvider
 		url: '/logout',
 		controller: 'LogoutCtrl'
 	});
+
+	$authProvider.loginUrl = API_URL + 'login';
+	$authProvider.signupUrl = API_URL + 'register';
+
+	$authProvider.google({
+		clientId: '958858990567-cvvik866sm852s3virfe4jqi4ucti4mv.apps.googleusercontent.com',
+		url: API_URL + 'auth/google',
+		redirectUri: window.location.origin + '/',
+		scope: ['profile', 'email']
+	});
+
+	$authProvider.github({
+      	clientId: '995ac31ad7039c759150',
+      	url: API_URL + 'auth/github',
+      	redirectUri: window.location.origin + '/'
+    });
 
 	$httpProvider.interceptors.push('authInterceptor');
 })

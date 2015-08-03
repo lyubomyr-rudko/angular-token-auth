@@ -19,10 +19,26 @@
 	<div class="form-group">
 		<div class="row">
 			<div class="col-sm-6 col-sm-offset-3">
-				<input type="button" name="register-submit" id="register-with-google" tabindex="4" class="form-control btn btn-default" value="Login with Google" ng-click="google()">
+				<input type="button" name="register-submit" id="register-with-google" tabindex="4" class="form-control btn btn-default" value="Google" ng-click="authenticate('google')">
+			</div>
+		</div>
+	</div>	
+
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">
+				<input type="button" name="register-submit" id="register-with-google" tabindex="4" class="form-control btn btn-default" value="Github" ng-click="authenticate('github')">
 			</div>
 		</div>
 	</div>
+<!-- 
+	<div class="form-group">
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">
+				<input type="button" name="register-submit" id="register-with-google" tabindex="4" class="form-control btn btn-default" value="Login with Google" ng-click="google()">
+			</div>
+		</div>
+	</div> -->
 
 	<div class="form-group">
 		<br>

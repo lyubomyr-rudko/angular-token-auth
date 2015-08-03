@@ -8,7 +8,8 @@
  * Controller of the nodeAngularOausLearningApp
  */
 angular.module('nodeAngularOausLearningApp')
-  .controller('LogoutCtrl', function (authToken, $state) {
-    authToken.removeToken();
+  .controller('LogoutCtrl', function (authToken, $state, $auth) {
+    // authToken.removeToken();
+    $auth.logout();
     $state.go('main');
   });

@@ -8,16 +8,19 @@
  * Controller of the nodeAngularOausLearningApp
  */
 angular.module('nodeAngularOausLearningApp')
-    .controller('RegisterCtrl', function ($scope, $state, alert, auth) {
+    .controller('RegisterCtrl', function ($scope, $state, alert, $auth) {
         $scope.submit = function () {
-            auth.register($scope.email, $scope.password)
-                .success(function (res) {
-                    alert('info', 'You are now registered!', 'Welcome back, ' + res.user.email + '!');
+            $auth.signup({
+                email: $scope.email, 
+                password: $scope.password
+            })
+            .then(function (res) {
+                alert('info', 'You are now registered!', 'Welcome back, ' + res.data.user.email + '!');
 
-                    $state.go('main');
-                })
-                .error(function () {
-                    alert('warning', 'Oops', 'Could not register'); 
-                });
+                $state.go('main');
+            })
+            .catch(function () {
+                alert('warning', 'Oops', 'Could not register'); 
+            });
         };
 });

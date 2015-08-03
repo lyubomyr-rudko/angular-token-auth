@@ -6,6 +6,7 @@ var jwt = require('./services/jwt.js');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var request = require('request');
+var moment = require('moment');
 
 var app = express();
 
@@ -17,9 +18,10 @@ passport.serializeUser(function (user, done) {
 });
 
 app.use(function (req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Origin', 'http://localhost:9000');
 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
 	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	res.header('Access-Control-Allow-Credentials ', 'true');
 
 	next();
 });
@@ -98,11 +100,15 @@ app.post('/api/login', passport.authenticate('local-login'), function (req, res)
 
 function createAndSendToken (user, res) {
 	var payload = {
-		sub: user.id
+		sub: user.id,
+		exp: moment().add(10, 'days').unix()
 	};
 
 	var token = jwt.encode(payload, 'LKJLK&&*DSJF&*(');
-
+	
+	console.log('token ', token);
+	console.log('user ', user);
+	
 	res.status(200).send({
 		user: user.toJSON(),
 		token: token
@@ -130,6 +136,55 @@ app.get('/api/jobs', function (req, res) {
 	res.json(jobs);
 });
 
+app.post('/api/auth/github', function (req, res) {
+	var params = {
+		code: req.body.code,
+		client_id: req.body.clientId, 
+		client_secret: '3f9ac96779d0d7328cf0f28e16476cfa80f3b296',
+		redirect_uri: req.body.redirectUri,
+		scope: 'user:email'
+	};
+
+	var url = 'https://github.com/login/oauth/access_token';
+	var apiUrl = 'https://api.github.com/user?access_token=';
+
+	console.log('call made');
+
+
+	request.post(url, {
+		json: true,
+		form: params
+	}, function (err, response, token) {
+		var accessToken = token.access_token;
+		var headers = {
+			Authorization: 'token ' + accessToken,
+			'User-Agent': 'oauth2 with angular app'
+		};
+		
+		request.get(apiUrl, {
+			json: true,
+			headers: headers
+		}, function (err, response, profile) {
+			User.findOne({
+				githubId: profile.id
+			}, function (err, foundUser) {
+				if (foundUser) {
+					return createAndSendToken(foundUser, res);
+				} else {
+					var newUser = new User({
+						githubId: profile.id,
+						displayName: profile.login
+					});
+
+					newUser.save(function (err) {
+						return createAndSendToken(newUser, res);
+					});
+				}
+			});
+		});
+	});
+}); 
+
 app.post('/api/auth/google', function (req, res) {
 	var params = {
 		code: req.body.code,
@@ -141,7 +196,6 @@ app.post('/api/auth/google', function (req, res) {
 
 	var url = 'https://www.googleapis.com/oauth2/v3/token';
 	var apiUrl = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect'; // userId?access_token=1/fFBGRNJru1FQd44AzqT3Zg
-
 
 	request.post(url, {
 		json: true,
